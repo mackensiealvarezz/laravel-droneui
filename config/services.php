@@ -31,6 +31,6 @@ return [
     ],
     'drone' => [
         'token' => env('DRONE_SECRET'),
-        'server' => env('DRONE_SERVER'),
+        'server' => env('DRONE_SERVER') . '/api',
     ],
 ];
