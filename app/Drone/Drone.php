@@ -258,4 +258,131 @@ class Drone
         return  Http::withToken(config('services.drone.token'))
             ->post(config('services.drone.server') . "/user/builds/recent");
     }
+
+
+    /**
+     * =====
+     * = Cron jobs
+     * =====
+     */
+
+
+    /**
+     * crons
+     * Fetch a cron list
+     * @param  mixed $namespace
+     * @param  mixed $name
+     * @return void
+     */
+    public static function crons(string $namespace, string $name)
+    {
+        return  Http::withToken(config('services.drone.token'))
+            ->post(config('services.drone.server') . "/repos/$namespace/$name/cron");
+    }
+
+    /**
+     * cron
+     * Fetch a certain cron
+     * @param  mixed $namespace
+     * @param  mixed $name
+     * @param  mixed $cron
+     * @return void
+     */
+    public static function cron(string $namespace, string $name, $cron)
+    {
+        return  Http::withToken(config('services.drone.token'))
+            ->post(config('services.drone.server') . "/repos/$namespace/$name/cron/$cron");
+    }
+
+    /**
+     * deleteCron
+     * Delete a cron
+     * @param  mixed $namespace
+     * @param  mixed $name
+     * @param  mixed $cron
+     * @return void
+     */
+    public static function deleteCron(string $namespace, string $name, $cron)
+    {
+        return  Http::withToken(config('services.drone.token'))
+            ->delete(config('services.drone.server') . "/repos/$namespace/$name/cron/$cron");
+    }
+
+    /**
+     * createCron
+     * Create a cron for the repo
+     * @param  mixed $namespace
+     * @param  mixed $name
+     * @param  mixed $cron
+     * @return void
+     */
+    public static function createCron(string $namespace, string $name, array $cron)
+    {
+        return  Http::withToken(config('services.drone.token'))
+            ->post(config('services.drone.server') . "/repos/$namespace/$name/cron", $cron);
+    }
+
+
+    /**
+     * updateCron
+     * Update cron information
+     * @param  mixed $namespace
+     * @param  mixed $name
+     * @param  mixed $cron_name
+     * @param  mixed $cron
+     * @return void
+     */
+    public static function updateCron(string $namespace, string $name, $cron_name, array $cron)
+    {
+        return  Http::withToken(config('services.drone.token'))
+            ->patch(config('services.drone.server') . "/repos/$namespace/$name/cron/$cron_name", $cron);
+    }
+
+    /**
+     * =====
+     * = Logs
+     * =====
+     */
+
+    /**
+     * logs
+     * Fetch logs for a build
+     * @param  mixed $namespace
+     * @param  mixed $name
+     * @param  mixed $build
+     * @param  mixed $stage
+     * @param  mixed $step
+     * @return void
+     */
+    public static function logs(string $namespace, string $name, $build,  $stage, $step)
+    {
+        return  Http::withToken(config('services.drone.token'))
+            ->get(config('services.drone.server') . "/repos/$namespace/$name/builds/$build/logs/$stage/$step");
+    }
+
+
+    /**
+     * =====
+     * = Members
+     * =====
+     */
+
+    /**
+     * members
+     * Fetches the list of members inside of the repo
+     * @param  mixed $namespace
+     * @param  mixed $name
+     * @return void
+     */
+    public static function members(string $namespace, string $name)
+    {
+        return  Http::withToken(config('services.drone.token'))
+            ->get(config('services.drone.server') . "/repos/$namespace/$name/collaborators");
+    }
+
+    public static function deleteMember(string $namespace, string $name, string $username)
+    {
+        return  Http::withToken(config('services.drone.token'))
+            ->delete(config('services.drone.server') . "/repos/$namespace/$name/collaborators/$username");
+    }
 }
