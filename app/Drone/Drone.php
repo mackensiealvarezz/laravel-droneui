@@ -385,4 +385,81 @@ class Drone
         return  Http::withToken(config('services.drone.token'))
             ->delete(config('services.drone.server') . "/repos/$namespace/$name/collaborators/$username");
     }
+
+
+    /**
+     * =====
+     * = Secrets
+     * =====
+     */
+
+    /**
+     * secrets
+     * Fetch a list of secrets for the repo
+     * @param  mixed $namespace
+     * @param  mixed $name
+     * @return void
+     */
+    public static function secrets(string $namespace, string $name)
+    {
+        return  Http::withToken(config('services.drone.token'))
+            ->get(config('services.drone.server') . "/repos/$namespace/$name/secrets");
+    }
+
+    /**
+     * secret
+     * Fetch one secret based on the id
+     * @param  mixed $namespace
+     * @param  mixed $name
+     * @param  mixed $secret
+     * @return void
+     */
+    public static function secret(string $namespace, string $name, $secret)
+    {
+        return  Http::withToken(config('services.drone.token'))
+            ->get(config('services.drone.server') . "/repos/$namespace/$name/secrets/$secret");
+    }
+
+    /**
+     * deleteSecret
+     * Delete a secret from the repo
+     * @param  mixed $namespace
+     * @param  mixed $name
+     * @param  mixed $secret_name = SECRET NAMe
+     * @return void
+     */
+    public static function deleteSecret(string $namespace, string $name, $secret_name)
+    {
+        return  Http::withToken(config('services.drone.token'))
+            ->delete(config('services.drone.server') . "/repos/$namespace/$name/secrets/$secret_name");
+    }
+
+    /**
+     * createSecret
+     * Create a secret in the repo
+     * @param  mixed $namespace
+     * @param  mixed $name
+     * @param  mixed $secret
+     * @return void
+     */
+    public static function createSecret(string $namespace, string $name, array $secret)
+    {
+        return  Http::withToken(config('services.drone.token'))
+            ->post(config('services.drone.server') . "/repos/$namespace/$name/secrets", $secret);
+    }
+
+    /**
+     * updateSecret
+     * Update a secret information
+     * @param  mixed $namespace
+     * @param  mixed $name
+     * @param  mixed $secret_name
+     * @param  mixed $secret
+     * @return void
+     */
+    public static function updateSecret(string $namespace, string $name, $secret_name, array $secret)
+    {
+        return  Http::withToken(config('services.drone.token'))
+            ->patch(config('services.drone.server') . "/repos/$namespace/$name/secrets/$secret_name", $secret);
+    }
 }
